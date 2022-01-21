@@ -51,6 +51,16 @@ variable "lb_tg_arn" {
   }
 }
 
+variable "ec2_key_pair" {
+  description = "(Required) EC2 key pair."
+  type        = string
+
+  validation {
+    condition     = can(regex("^ssh-rsa.*", var.ec2_key_pair))
+    error_message = "EC2 key pair is required."
+  }
+}
+
 ###############################################################################
 # Optional variables
 ###############################################################################
