@@ -2,7 +2,6 @@
 locals {
   asg_name       = "${var.environment}-${var.asg_name}"
   lc_name        = "${var.environment}-${var.asg_name}-lc"
-  tf_version     = trimspace(chomp(file("./tf_version")))
   module_version = trimspace(chomp(file("./version")))
   last_update    = formatdate("YYYY-MM-DD hh:mm:ss", timestamp())
 }
@@ -103,11 +102,6 @@ resource "aws_autoscaling_group" "this" {
     {
       "key"                 = "module_version"
       "value"               = "${local.module_version}"
-      "propagate_at_launch" = true
-    },
-    {
-      "key"                 = "terraform"
-      "value"               = "${local.tf_version}"
       "propagate_at_launch" = true
     },
     {
