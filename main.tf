@@ -51,7 +51,7 @@ resource "aws_launch_configuration" "this" {
   iam_instance_profile = "${var.environment}-EC2InstanceRole"
   key_name             = "${var.environment}-ec2-keypair"
   security_groups      = var.lc_security_group_list
-  user_data            = file("./userdata.sh")
+  user_data_base64     = "IyEvYmluL2Jhc2gKeXVtIHVwZGF0ZSAteQpzdWRvIHN5c3RlbWN0bCBlbmFibGUgYXdzbG9nc2Quc2VydmljZQpzdWRvIHN5c3RlbWN0bCBzdG9wIGF3c2xvZ3NkCnN1ZG8gc3lzdGVtY3RsIHN0YXJ0IGF3c2xvZ3NkCnN1ZG8gc3lzdGVtY3RsIHN0YXR1cyBhd3Nsb2dzZAo="
 
   root_block_device {
     encrypted   = true
