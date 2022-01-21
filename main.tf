@@ -40,7 +40,7 @@ data "aws_ami" "app" {
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
 resource "aws_key_pair" "this" {
   key_name   = "${var.environment}-ec2-keypair"
-  public_key = file("./${var.environment}-ec2-keypair.pub")
+  public_key = var.ec2_key_pair
 }
 
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration
