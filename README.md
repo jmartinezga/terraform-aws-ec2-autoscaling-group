@@ -71,4 +71,5 @@ No modules.
 |------|-------------|
 | <a name="output_arn"></a> [arn](#output\_arn) | Autoscaling Group arn. |
 | <a name="output_id"></a> [id](#output\_id) | Autoscaling Group id. |
+| <a name="output_name"></a> [name](#output\_name) | Autoscaling Group name. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
