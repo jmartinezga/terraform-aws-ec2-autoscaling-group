@@ -30,7 +30,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.72.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.73.0 |
 
 ## Modules
 
@@ -68,6 +68,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_asg_arn"></a> [asg\_arn](#output\_asg\_arn) | Autoscaling Group arn. |
-| <a name="output_asg_id"></a> [asg\_id](#output\_asg\_id) | Autoscaling Group id. |
+| <a name="output_arn"></a> [arn](#output\_arn) | Autoscaling Group arn. |
+| <a name="output_id"></a> [id](#output\_id) | Autoscaling Group id. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
