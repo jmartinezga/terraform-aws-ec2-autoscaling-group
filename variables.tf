@@ -70,8 +70,8 @@ variable "asg_max_size" {
   default     = 1
 
   validation {
-    condition     = var.asg_max_size >= 1 || var.asg_max_size <= 3
-    error_message = "Autoscaling Group max size should be a number between 1 and 3."
+    condition     = var.asg_max_size >= 1 || var.asg_max_size <= 4
+    error_message = "Autoscaling Group max size should be a number between 1 and 4."
   }
 }
 variable "asg_min_size" {
@@ -80,8 +80,8 @@ variable "asg_min_size" {
   default     = 1
 
   validation {
-    condition     = var.asg_min_size >= 1 || var.asg_min_size <= 3
-    error_message = "Autoscaling Group min size should be a number between 1 and 3."
+    condition     = var.asg_min_size >= 1 || var.asg_min_size <= 2
+    error_message = "Autoscaling Group min size should be a number between 1 and 2."
   }
 }
 
@@ -91,8 +91,8 @@ variable "asg_desired_capacity" {
   default     = 1
 
   validation {
-    condition     = var.asg_desired_capacity >= 1 || var.asg_desired_capacity <= 3
-    error_message = "Autoscaling Group desired capacity should be a number between 1 and 3."
+    condition     = var.asg_desired_capacity >= 1 || var.asg_desired_capacity <= 4
+    error_message = "Autoscaling Group desired capacity should be a number between 1 and 4."
   }
 }
 
