@@ -55,6 +55,9 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_ami_name"></a> [ami\_name](#input\_ami\_name) | (Required) AMI Name. | `string` | n/a | yes |
 | <a name="input_application"></a> [application](#input\_application) | (Required) Application name | `string` | n/a | yes |
+| <a name="input_asg_desired_capacity"></a> [asg\_desired\_capacity](#input\_asg\_desired\_capacity) | (Optional) Autoscaling Group max size. | `number` | `1` | no |
+| <a name="input_asg_max_size"></a> [asg\_max\_size](#input\_asg\_max\_size) | (Optional) Autoscaling Group max size. | `number` | `1` | no |
+| <a name="input_asg_min_size"></a> [asg\_min\_size](#input\_asg\_min\_size) | (Optional) Autoscaling Group max size. | `number` | `1` | no |
 | <a name="input_asg_name"></a> [asg\_name](#input\_asg\_name) | (Required) Autoscaling Group name. | `string` | n/a | yes |
 | <a name="input_asg_subnets_list"></a> [asg\_subnets\_list](#input\_asg\_subnets\_list) | (Required) Load Balancer subnets id list. | `list(string)` | n/a | yes |
 | <a name="input_ec2_instance_root_volum_size"></a> [ec2\_instance\_root\_volum\_size](#input\_ec2\_instance\_root\_volum\_size) | (Optiona) EC2 root volume size. | `number` | `8` | no |

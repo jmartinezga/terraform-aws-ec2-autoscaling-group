@@ -69,9 +69,9 @@ resource "aws_launch_configuration" "this" {
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group
 resource "aws_autoscaling_group" "this" {
   name                      = local.asg_name
-  max_size                  = 0
-  min_size                  = 0
-  desired_capacity          = 0
+  max_size                  = var.environment == "dev" ? 1 : var.asg_max_size
+  min_size                  = var.environment == "dev" ? 1 : var.asg_min_size
+  desired_capacity          = var.environment == "dev" ? 1 : var.asg_desired_capacity
   health_check_grace_period = 300
   health_check_type         = "ELB"
   termination_policies      = ["OldestLaunchConfiguration", "ClosestToNextInstanceHour"]
