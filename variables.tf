@@ -96,6 +96,17 @@ variable "asg_desired_capacity" {
   }
 }
 
+variable "health_check_grace_period" {
+  description = "(Optional) Autoscalig Group health check grace period(seconds)."
+  type        = number
+  default     = 300
+
+  validation {
+    condition     = var.health_check_grace_period >= 0
+    error_message = "Autoscaling Group health check grace period should be a number."
+  }
+}
+
 variable "ec2_instance_type" {
   description = "(Optiona) EC2 Instance type."
   type        = string

@@ -64,6 +64,7 @@ No modules.
 | <a name="input_ec2_instance_type"></a> [ec2\_instance\_type](#input\_ec2\_instance\_type) | (Optiona) EC2 Instance type. | `string` | `"m4.large"` | no |
 | <a name="input_ec2_key_pair"></a> [ec2\_key\_pair](#input\_ec2\_key\_pair) | (Required) EC2 key pair. | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | (Required) Environment (dev, stg, prd) | `string` | n/a | yes |
+| <a name="input_health_check_grace_period"></a> [health\_check\_grace\_period](#input\_health\_check\_grace\_period) | (Optional) Autoscalig Group health check grace period(seconds). | `number` | `300` | no |
 | <a name="input_lb_tg_arn"></a> [lb\_tg\_arn](#input\_lb\_tg\_arn) | (Required) Load Balancer target group arn. | `string` | n/a | yes |
 | <a name="input_lc_security_group_list"></a> [lc\_security\_group\_list](#input\_lc\_security\_group\_list) | (Required) Launch Configuraion Security Group id list. | `list(string)` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | (Required) AWS Region | `string` | n/a | yes |
