@@ -1,16 +1,23 @@
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 locals {
   asg_name       = "${var.environment}-${var.asg_name}"
-  lc_name        = "${var.environment}-${var.asg_name}-lc"
+  lt_name        = "${var.environment}-${var.asg_name}-lt"
   module_version = trimspace(chomp(file("./version")))
   last_update    = formatdate("YYYY-MM-DD hh:mm:ss", timestamp())
+  tags = merge(var.tags, {
+    environment    = "${var.environment}",
+    application    = "${var.application}",
+    module_name    = "terraform-aws-ec2-autoscaling-group",
+    module_version = "${local.module_version}",
+    last_update    = "${local.last_update}"
+  })
 }
 
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity
 data "aws_caller_identity" "current" {}
 
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami
-data "aws_ami" "app" {
+data "aws_ami" "this" {
   most_recent = true
 
   filter {
@@ -42,30 +49,51 @@ resource "aws_key_pair" "this" {
   public_key = var.ec2_key_pair
 }
 
-#https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration
-resource "aws_launch_configuration" "this" {
-  name                 = local.lc_name
-  image_id             = data.aws_ami.app.id
-  instance_type        = var.environment == "prd" ? var.ec2_instance_type : "t2.micro"
-  iam_instance_profile = "${var.environment}-EC2InstanceRole"
-  key_name             = "${var.environment}-ec2-keypair"
-  security_groups      = var.lc_security_group_list
-  user_data_base64     = "IyEvYmluL2Jhc2gKeXVtIHVwZGF0ZSAteQpzdWRvIHN5c3RlbWN0bCBlbmFibGUgYXdzbG9nc2Quc2VydmljZQpzdWRvIHN5c3RlbWN0bCBzdG9wIGF3c2xvZ3NkCnN1ZG8gc3lzdGVtY3RsIHN0YXJ0IGF3c2xvZ3NkCnN1ZG8gc3lzdGVtY3RsIHN0YXR1cyBhd3Nsb2dzZAo="
-
-  root_block_device {
-    encrypted   = true
-    volume_size = var.ec2_instance_root_volum_size
+#https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template
+resource "aws_launch_template" "this" {
+  name                   = local.lt_name
+  image_id               = data.aws_ami.this.id
+  instance_type          = var.environment == "prd" ? var.ec2_instance_type : "t2.micro"
+  key_name               = "${var.environment}-ec2-keypair"
+  vpc_security_group_ids = var.lt_security_group_list
+  user_data              = "IyEvYmluL2Jhc2gKeXVtIHVwZGF0ZSAteQpzdWRvIHN5c3RlbWN0bCBlbmFibGUgYXdzbG9nc2Quc2VydmljZQpzdWRvIHN5c3RlbWN0bCBzdG9wIGF3c2xvZ3NkCnN1ZG8gc3lzdGVtY3RsIHN0YXJ0IGF3c2xvZ3NkCnN1ZG8gc3lzdGVtY3RsIHN0YXR1cyBhd3Nsb2dzZAo="
+  iam_instance_profile {
+    name = "${var.environment}-EC2InstanceRole"
   }
 
+  cpu_options {
+    core_count       = 4
+    threads_per_core = 2
+  }
+
+  credit_specification {
+    cpu_credits = "standard"
+  }
+
+  block_device_mappings {
+    ebs {
+      encrypted   = true
+      volume_type = "standard"
+    }
+  }
+
+  ebs_optimized = true
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "optional"
   }
 
+  tag_specifications {
+    resource_type = "instance"
+    tags          = local.tags
+  }
+
+  update_default_version = true
   lifecycle {
     create_before_destroy = true
   }
 }
+
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group
 resource "aws_autoscaling_group" "this" {
   name                      = local.asg_name
@@ -75,14 +103,18 @@ resource "aws_autoscaling_group" "this" {
   health_check_grace_period = var.health_check_grace_period
   health_check_type         = "ELB"
   termination_policies      = ["OldestLaunchConfiguration", "ClosestToNextInstanceHour"]
-  launch_configuration      = aws_launch_configuration.this.name
   vpc_zone_identifier       = var.asg_subnets_list
+
+  launch_template {
+    id      = aws_launch_template.this.id
+    version = "$Latest"
+  }
 
   tags = [
     {
       "key"                 = "Name"
       "value"               = "${var.asg_name}"
-      "propagate_at_launch" = false
+      "propagate_at_launch" = true
     },
     {
       "key"                 = "environment"

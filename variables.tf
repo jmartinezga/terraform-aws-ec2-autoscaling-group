@@ -32,12 +32,12 @@ variable "ami_name" {
   }
 }
 
-variable "lc_security_group_list" {
+variable "lt_security_group_list" {
   description = "(Required) Launch Configuraion Security Group id list."
   type        = list(string)
 
   validation {
-    condition     = length(var.lc_security_group_list) > 0
+    condition     = length(var.lt_security_group_list) > 0
     error_message = "Launch Configuraion Security Group id list is required."
   }
 }
@@ -127,4 +127,10 @@ variable "ec2_instance_root_volum_size" {
     condition     = can(regex("[0-9]{1,3}", var.ec2_instance_root_volum_size))
     error_message = "EC2 Instance root volum size should be between [8 - 999]."
   }
+}
+
+variable "tags" {
+  description = "(Optional) Tags to assign to the resource."
+  type        = any
+  default     = {}
 }

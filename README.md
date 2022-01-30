@@ -30,7 +30,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.73.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.74.0 |
 
 ## Modules
 
@@ -45,8 +45,8 @@ No modules.
 | [aws_autoscaling_policy.scale_down](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy) | resource |
 | [aws_autoscaling_policy.scale_up](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy) | resource |
 | [aws_key_pair.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair) | resource |
-| [aws_launch_configuration.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration) | resource |
-| [aws_ami.app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_launch_template.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
+| [aws_ami.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 
 ## Inputs
@@ -66,8 +66,9 @@ No modules.
 | <a name="input_environment"></a> [environment](#input\_environment) | (Required) Environment (dev, stg, prd) | `string` | n/a | yes |
 | <a name="input_health_check_grace_period"></a> [health\_check\_grace\_period](#input\_health\_check\_grace\_period) | (Optional) Autoscalig Group health check grace period(seconds). | `number` | `300` | no |
 | <a name="input_lb_tg_arn"></a> [lb\_tg\_arn](#input\_lb\_tg\_arn) | (Required) Load Balancer target group arn. | `string` | n/a | yes |
-| <a name="input_lc_security_group_list"></a> [lc\_security\_group\_list](#input\_lc\_security\_group\_list) | (Required) Launch Configuraion Security Group id list. | `list(string)` | n/a | yes |
+| <a name="input_lt_security_group_list"></a> [lt\_security\_group\_list](#input\_lt\_security\_group\_list) | (Required) Launch Configuraion Security Group id list. | `list(string)` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | (Required) AWS Region | `string` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | (Optional) Tags to assign to the resource. | `any` | `{}` | no |
 
 ## Outputs
 
