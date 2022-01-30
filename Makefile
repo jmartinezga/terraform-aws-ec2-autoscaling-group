@@ -25,7 +25,7 @@ destroy: init
 docs:
 	terraform-docs markdown . | tee README.md
 
-precommit:
+precommit: clean
 	pre-commit autoupdate
 	pre-commit run -a ; git add .
 	$(MAKE) clean
