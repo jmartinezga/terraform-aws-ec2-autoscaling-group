@@ -4,7 +4,6 @@
 variable "region" {
   description = "(Required) AWS Region"
   type        = string
-  nullable    = false
 
   validation {
     condition     = can(regex("eu-west-1|us-east-1", var.region))
@@ -15,7 +14,6 @@ variable "region" {
 variable "environment" {
   description = "(Required) Environment (dev, stg, prd)"
   type        = string
-  nullable    = false
 
   validation {
     condition     = can(regex("dev|stg|prd", var.environment))
@@ -26,7 +24,6 @@ variable "environment" {
 variable "application" {
   description = "(Required) Application name"
   type        = string
-  nullable    = false
 
   validation {
     condition     = length(var.application) > 0
